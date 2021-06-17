@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment
+  labels:
+    tier: frontend-deploy
+    app: ecr-deploy
+spec:
+  selector:
+    matchLabels:
+       tier: frontend
+  replicas: 3
+  template:
+    metadata:
+      name: ecr-image-httpd
+      labels:
+        app: httpd-ecr
+        tier: frontend
+
+    spec:
+      containers:
+        - name: httpd-ecr
+          image: 126825415745.dkr.ecr.ap-south-1.amazonaws.com/test-repo:${VERSION}
